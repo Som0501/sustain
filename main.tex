@@ -1,0 +1,279 @@
+% --- Preamble ---
+\documentclass[11pt, a4paper]{article}
+
+% Required Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage[sort&compress, numbers]{natbib}
+\usepackage{geometry}
+\usepackage{titlesec}
+
+% Geometry for margins
+\geometry{
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    left=30mm,
+    right=30mm
+}
+
+% Title formatting
+\titlespacing{\section}{0pt}{12pt}{12pt}
+\titlespacing{\subsection}{0pt}{10pt}{10pt}
+\titlespacing{\subsubsection}{0pt}{8pt}{8pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1.2}
+
+% Custom commands for consistency
+\newcommand{\univertityname}{University of Surrey}
+\newcommand{\modulecode}{EEEM073}
+\newcommand{\modulename}{AI AND SUSTAINABILITY}
+\newcommand{\projecttitle}{AI-Driven PM2.5 Forecasting and AQI Classification in Singapore}
+\newcommand{\studentname}{[Your Name]}
+\newcommand{\studentid}{[Your Student ID]}
+\newcommand{\submissiondate}{May 2025}
+
+% --- Title Page ---
+\begin{document}
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.3\textwidth]{surrey_logo.png} % You can replace this with a local image or your university's name
+    \vspace{2cm}
+
+    \hrule height 4pt
+    \vspace{1cm}
+    {\Huge \bfseries \projecttitle \par}
+    \vspace{1cm}
+    {\Large \modulename \ (\modulecode) \par}
+    \vspace{1cm}
+    \hrule height 2pt
+    \vspace{2cm}
+
+    {\Large \bfseries Coursework Report \par}
+    \vspace{1cm}
+
+    \begin{minipage}{0.5\textwidth}
+        \begin{flushleft}
+            \large
+            \vspace{2cm}
+            \textbf{Student Name:} \studentname \\
+            \textbf{Student ID:} \studentid
+        \end{flushleft}
+    \end{minipage}
+
+    \vfill
+
+    {\large Department of Computer Science \par}
+    {\large MSc Artificial Intelligence \par}
+    {\large \univertityname \par}
+    {\large \submissiondate \par}
+\end{titlepage}
+
+% --- Abstract ---
+\begin{abstract}
+\textbf{Abstract}
+\newline
+[Write a concise summary of your project here. Include the problem statement, the dataset used, the models developed (e.g., LSTM for forecasting, LightGBM for classification), the main findings, and the conclusion. Mention the link to sustainable AI and how model compression was applied.]
+\end{abstract}
+
+% --- Table of Contents ---
+\newpage
+\tableofcontents
+\newpage
+
+% --- Main Content ---
+
+\section{Introduction}
+
+\subsection{Problem Definition and Relevance to AI and Sustainability}
+[Provide a background on the issue of air quality and PM2.5 pollution, specifically in the context of Singapore. Discuss why accurate forecasting is crucial for public health and urban planning. Explicitly link this problem to the United Nations Sustainable Development Goals (UNSDGs), for example:
+\begin{itemize}
+    \item \textbf{SDG 3: Good Health and Well-being:} By forecasting poor air quality events, the system can help issue health advisories, protecting vulnerable populations.
+    \item \textbf{SDG 11: Sustainable Cities and Communities:} Provides a tool for city planners to manage pollution and develop resilient urban infrastructure.
+\end{itemize}
+State your clear problem statement, e.g., "This project aims to develop a system for forecasting daily PM2.5 levels and classifying the Air Quality Index (AQI) in Singapore using AI techniques."]
+
+\subsection{Objectives}
+This project aims to:
+\begin{itemize}
+    \item Develop an AI-based model to forecast daily PM2.5 concentration in Singapore for the next 24 hours.
+    \item Classify the Air Quality Index (AQI) based on forecasted PM2.5 levels, providing a categorical prediction.
+    \item Evaluate and compare the performance of different models for both forecasting and classification tasks.
+    \item Apply model compression techniques to enhance the efficiency and sustainability of the final model.
+    \item Analyze model performance and provide interpretable insights for non-technical stakeholders.
+\end{itemize}
+
+\subsection{Dataset Overview}
+[Describe the dataset you are using. For example, "The dataset contains hourly meteorological data and pollution readings from various monitoring stations in Singapore. It includes features like temperature, humidity, wind speed, rainfall, and historical PM2.5 values."]
+\begin{itemize}
+    \item \textbf{Total Samples:} [Number]
+    \item \textbf{Features:} [List key features, e.g., PM2.5, Temperature, Humidity, etc.]
+    \item \textbf{Target Variables:} Daily average PM2.5 concentration (for forecasting) and AQI category (for classification).
+\end{itemize}
+
+\subsection{Approach Summary}
+[Provide a brief overview of your methodology, mentioning the key steps from data loading to model compression, similar to the friend's report. Example: "The project involves data preprocessing, feature engineering, development of a time-series forecasting model (e.g., LSTM) and a classification model (e.g., LightGBM), comprehensive performance evaluation, and a final model compression step."]
+
+\section{Data Understanding, Pre-processing and Exploration}
+
+\subsection{Dataset Overview and Initial Inspection}
+[Describe your initial inspection of the data. Use a table to show the data dictionary, possibly in an appendix.]
+
+\subsection{Data Pre-processing and Cleaning}
+[Detail the steps you took to clean the data. This is a crucial section for marks. Mention how you handled missing values (e.g., imputation, removal, or forward-fill), outlier detection, and any other data inconsistencies.]
+
+\subsection{Feature Engineering and Scaling}
+[Explain how you created new features. For example, lag features (historical PM2.5 values) are essential for time-series forecasting. Mention any categorical encoding (e.g., for day of the week) and how you applied a scaler (e.g., `MinMaxScaler` or `StandardScaler`) to normalize the numerical features.]
+
+\subsection{Handling Class Imbalance}
+[Discuss how you handled the class imbalance in the AQI classification task. The 'good' AQI class will likely be overrepresented. Mention techniques like SMOTE, class weighting, or using a specialized loss function.]
+
+\subsection{Exploratory Data Analysis (EDA) and Visualisation}
+[Showcase some insightful plots here. The following are highly recommended, as they were in the example report:
+\begin{itemize}
+    \item A histogram or bar chart showing the distribution of PM2.5 values or AQI categories.
+    \item A heatmap showing missing data patterns before and after cleaning.
+    \item A correlation heatmap to understand relationships between features.
+    \item A line plot showing PM2.5 trends over time.
+\end{itemize}
+All figures must have clear and descriptive captions.]
+
+\section{Modelling}
+
+\subsection{Model Selection and Justification}
+[Explain your choice of models. For PM2.5 forecasting, justify why you chose a time-series model like an LSTM. For AQI classification, justify your choice of a tree-based model like LightGBM, citing its speed and performance. Mention a simpler baseline model like a Linear Regression or a simple Logistic Regression for comparison.]
+
+\subsection{Modelling Task 1: PM2.5 Forecasting (Regression)}
+[Describe your regression model in detail.
+\begin{itemize}
+    \item \textbf{Model:} [e.g., Bidirectional LSTM, GRU]
+    \item \textbf{Architecture:} [Number of layers, hidden units, dropout rate, activation functions]
+    \item \textbf{Training Strategy:} [Loss function (e.g., MSE), optimizer (e.g., Adam), early stopping, batch size]
+    \item \textbf{Key Techniques:} Mention how you used a sliding window approach to create time-series sequences.
+\end{itemize}]
+
+\subsection{Modelling Task 2: AQI Classification (Multi-class)}
+[Describe your classification model.
+\begin{itemize}
+    \item \textbf{Model:} [e.g., LightGBM, XGBoost]
+    \item \textbf{Hyperparameter Tuning:} Explain that you used a framework like Optuna or a grid search to find the best parameters. Mention the objective metric you used (e.g., macro-F1 score due to imbalance).
+    \item \textbf{Class Imbalance:} Reiterate how you handled imbalance for this specific model (e.g., using `class_weight='balanced'` or Focal Loss).
+\end{itemize}]
+
+\section{Performance Evaluation and Comparison of Models}
+
+\subsection{Evaluation Metrics}
+[List the metrics you will use for each task and justify your choice.
+\begin{itemize}
+    \item \textbf{For PM2.5 Forecasting:} Root Mean Squared Error (RMSE), Mean Absolute Error (MAE).
+    \item \textbf{For AQI Classification:} Accuracy, Precision, Recall, F1-Score, ROC-AUC, and a Confusion Matrix.
+\end{itemize}]
+
+\subsection{Comparative Analysis}
+[Present a summary of your results in a table, comparing your baseline and main models.
+\begin{table}[H]
+    \caption{Performance Comparison of AQI Classification Models}
+    \label{tab:lgbm-performance}
+    \begin{adjustbox}{width=\textwidth,center}
+        \begin{tabular}{l c c c c c}
+            \toprule
+            \textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{ROC-AUC} \\
+            \midrule
+            Logistic Regression (Baseline) & [value] & [value] & [value] & [value] & [value] \\
+            LGBM (Untuned) & [value] & [value] & [value] & [value] & [value] \\
+            LGBM (Tuned + Class Wt) & [value] & [value] & [value] & [value] & [value] \\
+            \bottomrule
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
+Also, create a bar chart to visually compare these metrics, just like in the example report.]
+
+\subsection{Computational Efficiency}
+[Provide a table comparing the training time, inference time, and model size for your different models. This is a key part of the "sustainable AI" aspect of the brief.
+\begin{table}[H]
+    \caption{Computational Efficiency Comparison}
+    \label{tab:efficiency}
+    \begin{tabular}{l c c c}
+        \toprule
+        \textbf{Model} & \textbf{Training Time} & \textbf{Inference Time} & \textbf{Model Size} \\
+        \midrule
+        [Model 1] & [value] & [value] & [value] \\
+        [Model 2] & [value] & [value] & [value] \\
+        \bottomrule
+    \end{tabular}
+\end{table}]
+
+\subsection{Interpretability}
+[Use an explainable AI technique like SHAP to show which features were most important for your best-performing model. Include a SHAP summary plot and discuss the results, linking them back to meteorological science (e.g., "Humidity and wind speed were highly influential in predicting PM2.5 levels").]
+
+\section{Model Compression and Efficiency Evaluation}
+
+\subsection{Compression Technique Applied}
+[Describe the model compression technique you used. Post-training dynamic quantization for a deep learning model (like LSTM) is a great choice as it's simple yet effective. Explain what it does (e.g., converts 32-bit floats to 8-bit integers) and why you chose it.]
+
+\subsection{Comparison: Original vs. Compressed Model}
+[Present a table comparing the performance and efficiency of your best model before and after compression.
+\begin{table}[H]
+    \caption{Original vs. Quantized Model Performance}
+    \label{tab:compression-performance}
+    \begin{adjustbox}{width=\textwidth,center}
+        \begin{tabular}{l c c}
+            \toprule
+            \textbf{Metric} & \textbf{Original Model} & \textbf{Compressed Model} \\
+            \midrule
+            Accuracy & [value] & [value] \\
+            F1-Score & [value] & [value] \\
+            Model Size (MB) & [value] & [value] \\
+            Inference Time (per sample) & [value] & [value] \\
+            \bottomrule
+        \end{tabular}
+    \end{adjustbox}
+\end{table}]
+
+\subsection{Suitability for Sustainable AI}
+[Discuss the trade-offs of compression. Highlight how a significant reduction in model size and inference time makes the model more sustainable, as it requires less energy to run. Mention how this allows for deployment on low-power, edge devices, which is a key goal of sustainable AI.]
+
+\section{Discussion, Conclusion, and Recommendations}
+
+\subsection{Discussion of Findings}
+[Summarize your key findings for both the forecasting and classification tasks. For example, "The LSTM model accurately predicted PM2.5 levels with low RMSE, and the tuned LightGBM model achieved a high F1-score for AQI classification."]
+
+\subsection{Limitations}
+[Be honest about the limitations of your project. This shows critical thinking. Examples could include:
+\begin{itemize}
+    \item \textbf{Data Limitations:} A reliance on historical data that may not capture sudden, unforeseen events.
+    \item \textbf{Model Generalization:} The models were trained on Singaporean data and may not generalize to other regions without re-training.
+    \item \textbf{Computational Constraints:} Inability to train more complex models or use more intensive tuning methods.
+\end{itemize}]
+
+\subsection{Conclusion}
+[Write a strong conclusion that summarizes the project's success. Reiterate that your AI system can effectively forecast PM2.5 and classify AQI, demonstrating the potential of AI for sustainability in an urban context.]
+
+\subsection{Future Recommendations}
+[Suggest next steps for the project to demonstrate forward-thinking.
+\begin{itemize}
+    \item \textbf{Multi-modal Data Fusion:} Incorporate satellite imagery or traffic data to enhance predictions.
+    \item \textbf{Transfer Learning:} Explore if a model trained on Singaporean data can be fine-tuned for other Southeast Asian cities.
+    \item \textbf{Real-time Deployment:} Benchmark the compressed model on a low-cost edge device to test its real-world feasibility.
+\end{itemize}]
+
+\begin{appendix}
+\section*{Appendix}
+\section{Data Dictionary}
+[Include a detailed table with all your features and their descriptions here.]
+\end{appendix}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
