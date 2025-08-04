@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run AI Modelling (M1 Optimized)",
+			"type": "shell",
+			"command": "cd code && jupyter nbconvert --execute --to notebook --inplace 3_AI_Modelling_FIXED.ipynb",
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}
