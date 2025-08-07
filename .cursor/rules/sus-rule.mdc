@@ -1,0 +1,86 @@
+---
+alwaysApply: true
+---
+
+# AI for Sustainable Cities (PM2.5 Forecasting) - Project Rules
+# Coursework: EEEM073 AI and Sustainability, University of Surrey
+
+## Project Context
+You are working on a machine learning project for forecasting hourly PM2.5 concentrations in Singapore. This project must be framed within the context of UN Sustainable Development Goals, specifically SDG 3 (Good Health and Well-being) and SDG 11 (Sustainable Cities and Communities).
+
+## Final Deliverables
+- **Report**: Single PDF document, maximum 25 pages, written for non-academic audience
+- **Dataset**: Final processed CSV file used for modelling
+- **Code**: ZIP file containing all Jupyter Notebooks and detailed README.md
+
+## Report Structure (7 sections)
+1. Introduction
+2. Data Preparation
+3. AI Modelling
+4. Evaluation
+5. Model Compression
+6. Discussion
+7. Conclusion
+
+All figures, charts, and tables must have clear, descriptive captions. Use concise, professional writing style avoiding academic jargon.
+
+## Code Structure Requirements
+Organize code into these 5 sequential Jupyter Notebooks:
+1. `1_Data_Loading_and_Preprocessing.ipynb`
+2. `2_Exploratory_Data_Analysis.ipynb`
+3. `3_AI_Modelling.ipynb`
+4. `4_Assessment_and_Evaluation.ipynb`
+5. `5_Model_Compression.ipynb`
+
+**Code Standards:**
+- Heavily comment all code to explain logic, steps, and decisions
+- Ensure full reproducibility
+- Include comprehensive README.md with project explanation, dependencies (requirements.txt), and setup instructions
+
+## Data Processing Rules
+**Data Splitting:** Use a chronological split (e.g., 70% train, 15% validation, 15% test) to prevent data leakage in time-series data.
+
+**Feature Engineering (Mandatory):**
+- Create cyclical time-based features using sine/cosine transformations for hour, day, and month to capture their cyclical nature.
+- Generate lag features for `pm25_value` and key weather variables (e.g., `temp`, `humidity`, `wind_speed`) to provide the model with recent historical context.
+
+**Outlier Handling:**
+- **Primary Task:** Systematically investigate the recurring `pm25_value` of 150.5. In the `2_Exploratory_Data_Analysis.ipynb` notebook, create visualizations (like a histogram or a time-series plot with a horizontal line at 150.5) to determine if this value represents a sensor's upper limit, a data cap, or a potential error code.
+- Justify the chosen handling method (e.g., clipping, removal, or leaving as is) in the notebook and summarize it in the final report.
+- Use boxplots to identify and manage potential outliers in other continuous variables (`temp`, `humidity`, `wind_speed`).
+
+**Scaling:** Scale all numerical features (e.g., using `MinMaxScaler` to transform them to a [0, 1] range) before they are input into the models.
+
+## AI Modelling Rules
+**Model Selection:** Implement and evaluate at least two time-series forecasting models. The selected models are LSTM and GRU. Justify this choice in the report.
+
+**Hyperparameter Tuning:** Conduct systematic tuning using the validation set. Document the process, the parameters tuned (e.g., layers, units, dropout, learning rate), and the final chosen configuration in your notebook.
+
+## Evaluation Rules
+**Performance Metrics:** Evaluate on the unseen test set using:
+- Root Mean Squared Error (RMSE)
+- Mean Absolute Error (MAE)
+- R-squared (R²)
+
+**Efficiency Metrics:** Measure and compare the final trained models based on:
+- File size (in MB)
+- Average inference time (in ms)
+
+**Explainable AI:** Apply SHAP (SHapley Additive exPlanations) to the best-performing model to identify key feature importances and interpret its predictions.
+
+## Model Compression Requirements
+**Techniques:** Apply at least two distinct compression techniques to the final models:
+- Pruning (e.g., magnitude-based pruning)
+- Post-Training Quantization (e.g., dynamic range quantization to int8)
+
+**Trade-off Analysis:** In the `5_Model_Compression.ipynb` notebook, create a clear comparison table showing the original vs. compressed models in terms of:
+- Performance (RMSE, MAE)
+- Model size (MB) and Compression Ratio
+- Inference speed (ms)
+
+## Quality Assurance
+Before any submission:
+- Verify all requirements in this file are met in the corresponding notebooks.
+- Ensure deliverables are correctly formatted and named.
+- Check that the notebooks can be run sequentially without errors to ensure reproducibility.
+- Ensure the `README.md` is complete and accurate.
